@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Details";
+}
+
+@model DetailsViewModel
+
+<div class="pt-4">
+    <div class="card container" style="border:1px solid #808080;">
+        <div class="card-header bg-dark text-light row" style="border-radius: 0px;">
+            <div class="col-12 col-md-6">
+                <h1 class="text-white">@Model.Movie.Title</h1>
+            </div>
+            <div class="col-12 col-md-6 text-end">
+                <h1 class="text-white">@string.Format("{0:MM/dd/yyyy}", Model.Movie.ReleaseDate)</h1>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container rounded p-2">
+                <div class="row">
+                    <div class="col-12 col-lg-4 p-1 text-center">
+                        <img src="@Model.Movie.PosterUrl" style="border-radius:35px;" width="100%" class="rounded" />
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <div class="row pl-3">
+                            <div class="col-12">
+                                <p class="text-secondary">@Html.Raw(Model.Movie.Description) </p>
+                                <h3 class="text-success">Reviews</h3>
+                                @if(Model.Reviews is not null)
+                                {
+                                    @foreach(var review in Model.Reviews)
+                                    {
+                                        <blockquote class="blockquote mb-0">
+                                            <p>@review.ReviewText</p>
+                                            <footer class="blockquote-footer">
+                                                By <cite title="Source Title">@review.User!.Username</cite>
+                                                <p class="card-text"><small class="text-muted">@string.Format("{0:MM/dd/yyyy}", @review.ReviewDate)</small></p>
+                                            </footer>
+                                        </blockquote>
+                                    }
+                                }
+                                else
+                                {
+                                    <h4 class="text-danger">Not reviews register yet</h4>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer row">
+            <div class="col-12 col-md-6 pb-1 ">
+                <a asp-action="Index" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Back To Movies</a>
+            </div>
+            <div class="col-12 col-md-6 ">
+                @if(!Model.IsAlreadyReviewed)
+                {
+                    <a asp-action="ReviewCreate" asp-controller="Review" class="btn btn-primary form-control btn-lg" style="height:50px;" asp-route-movieId="@Model.Movie.MovieId">Review</a>
+                }
+                else
+                {
+                    <a asp-action="ReviewEdit" asp-controller="Review" class="btn btn-primary form-control btn-lg" style="height:50px; width:49%;" asp-route-movieId="@Model.Movie.MovieId">Edit</a>
+                    <a asp-action="ReviewDelete" asp-controller="Review" class="btn btn-danger form-control btn-lg" style="height:50px; width:49%;" asp-route-movieId="@Model.Movie.MovieId">Delete</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

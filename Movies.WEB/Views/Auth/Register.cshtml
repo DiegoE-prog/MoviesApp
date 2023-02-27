@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+@model RegisterDto
+<form asp-action="Register">
+    <div class="container container border p-3">
+        <h1 class="text-primary">Login</h1>
+        <hr />
+        <div class="row">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="col-2">
+                <label asp-for="Username" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="Password" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div>
+                <span class="text-danger pb-3">@ViewBag.Error</span>
+            </div>
+
+            <div class="col-5 offset-3 pb-3 ">
+                <input type="submit" value="Register" class="btn btn-primary form-control" />
+            </div>
+        </div>
+    </div>
+</form>

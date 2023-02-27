@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Movie";
+}
+@model List<MovieDto>
+
+<div class="container row">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Movies List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a asp-action="MovieCreate" class="btn btn-outline-primary"><i class="fas fa-plus"></i> Create New Movie</a>
+        </div>
+    </div>
+    @if (Model is not null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Synopsis</th>
+                    <th>Release Date</th>
+                    <th>Category</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var movie in Model)
+                {
+                    <tr>
+                        <th>@movie.Title</th>
+                        <th>@movie.Description</th>
+                        <th>@movie.ReleaseDate.ToString("MM/dd/yyyy")</th>
+                        <th>@movie.Category?.Name</th>
+                        <th>
+                            <a asp-action="MovieEdit" class="btn btn-success" asp-route-movieId="@movie.MovieId"><i class="fas fa-edit"></i></a>
+                            <a asp-action="MovieDelete" class="btn btn-danger" asp-route-movieId="@movie.MovieId"><i class="fas fa-trash"></i></a>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h3 class="text-danger">There's not movies created yet</h3>
+    }
+</div>

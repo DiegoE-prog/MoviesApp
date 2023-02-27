@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Category";
+}
+@model List<CategoryDto>
+
+<div class="container row">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Category List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a asp-action="CategoryCreate" class="btn btn-outline-primary"><i class="fas fa-plus"></i> Create New Category</a>
+        </div>
+    </div>
+    @if (Model is not null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <th>@category.Name</th>
+                        <th>
+                            <a asp-action="CategoryEdit" class="btn btn-success" asp-route-categoryId="@category.CategoryId"><i class="fas fa-edit"></i></a>
+                            <a asp-action="CategoryDelete" class="btn btn-danger" asp-route-categoryId="@category.CategoryId"><i class="fas fa-trash"></i></a>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        
+    } 
+</div>   

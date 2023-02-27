@@ -1,0 +1,28 @@
+﻿@model List<ReviewDto>
+<div class="container row">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">My Reviews</h1>
+        </div>
+    </div>
+    <div class="row">
+        @if (Model is not null)
+        {
+            <ul class="list-group">
+            @foreach(var review in Model)
+            {
+                    <li class="list-group-item">
+                    <div class="d-flex w-100">
+                        <h5 class="mb-1">@review.Movie.Title</h5>
+                    </div>
+                    <p class="mb-1">@review.ReviewText</p>
+                </li>
+            }
+            </ul>
+        }
+        else
+        {
+            <h2 class="text-danger">No reviews register yet</h2>
+        }
+    </div>
+</div>

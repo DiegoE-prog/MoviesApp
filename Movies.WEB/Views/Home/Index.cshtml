@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<MovieDto>
+
+<div class="container row">
+    @if(Model is not null)
+    {
+        @foreach (var movie in Model)
+        {
+            <div class="col-3 ">
+                    <div class="p-0 my-3 border">
+                        <div class="card">
+                            <img src="@movie.PosterUrl" class="card-img-top">
+                            <div class="card-body">
+                                <h3 class="card-title">@movie.Title</h3>
+                                <h6 class="card-subtitle mb-2 text-muted">@movie.Category?.Name | @movie.ReleaseDate.ToString("MM/dd/yyyy")</h6>
+                                <p class="card-text">@Html.Raw(movie.Description)</p>
+                                <a asp-action="Details" class="btn btn-primary" asp-route-movieId="@movie.MovieId">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        }
+    }
+    else
+    {
+        <h3 class="text-danger">There is an error</h3>
+    }
+
+</div>
