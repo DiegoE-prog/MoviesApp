@@ -20,19 +20,10 @@ namespace Movies.API.Services
         public async Task<ServiceResponse<GetCategoryDto>> AddCategoryAsync(CategoryToAddDto categoryToAddDto)
         {
             var serviceResponse = new ServiceResponse<GetCategoryDto>();
-            try
-            {
-                var category = await _categoryRepository.AddCategoryAsync(categoryToAddDto);
+            var category = await _categoryRepository.AddCategoryAsync(categoryToAddDto);
 
-                serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
-
-                serviceResponse.Message = "Category Added Successfully";
-            }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+            serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
+            serviceResponse.Message = "Category Added Successfully";
 
             return serviceResponse;
         }
@@ -40,40 +31,30 @@ namespace Movies.API.Services
         public async Task<ServiceResponse<string>> DeleteCategoryAsync(int id)
         {
             var serviceResponse = new ServiceResponse<string>();
-            try
+
+            var isSucessfull = await _categoryRepository.DeleteCategoryAsync(id);
+            
+            if (isSucessfull is false)
             {
-                var isSucessfull = await _categoryRepository.DeleteCategoryAsync(id);
-                if (isSucessfull is false)
-                {
-                    throw new Exception("There is not a category with that ID");
-                }
-                serviceResponse.Data = "Category deleted successfully";
+                throw new Exception("There is not a category with that ID");
             }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+            
+            serviceResponse.Data = "Category deleted successfully";
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<List<GetCategoryDto>>> GetCategoriesAsync()
         {
             var serviceResponse = new ServiceResponse<List<GetCategoryDto>>();
-            try
+
+            var categories = await _categoryRepository.GetCategoriesAsync();
+          
+            if (categories is null || categories.Count is 0)
             {
-                var categories = await _categoryRepository.GetCategoriesAsync();
-                if (categories is null || categories.Count is 0)
-                {
-                    throw new Exception("There are not categories available");
-                }
-                serviceResponse.Data = _mapper.Map<List<GetCategoryDto>>(categories);
+                throw new Exception("There are not categories available");
             }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+
+            serviceResponse.Data = _mapper.Map<List<GetCategoryDto>>(categories);
 
             return serviceResponse;
         }
@@ -81,20 +62,15 @@ namespace Movies.API.Services
         public async Task<ServiceResponse<GetCategoryDto>> GetCategoryByIdAsync(int id)
         {
             var serviceResponse = new ServiceResponse<GetCategoryDto>();
-            try
+
+            var category = await _categoryRepository.GetCategoryByIdAsync(id);
+            
+            if (category is null)
             {
-                var category = await _categoryRepository.GetCategoryByIdAsync(id);
-                if (category is null)
-                {
-                    throw new Exception("There is not a category with that ID");
-                }
-                serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
+                throw new Exception("There is not a category with that ID");
+            
             }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+            serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
 
             return serviceResponse;
         }
@@ -102,20 +78,14 @@ namespace Movies.API.Services
         public async Task<ServiceResponse<GetCategoryDto>> UpdateCategoryAsync(CategoryToUpdateDto categoryToUpdateDto)
         {
             var serviceResponse = new ServiceResponse<GetCategoryDto>();
-            try
+
+            var category = await _categoryRepository.UpdateCategoryAsync(categoryToUpdateDto);
+            
+            if (category is null)
             {
-                var category = await _categoryRepository.UpdateCategoryAsync(categoryToUpdateDto);
-                if (category is null)
-                {
-                    throw new Exception("There is not a category with that ID");
-                }
-                serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
+                throw new Exception("There is not a category with that ID");
             }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+            serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
 
             return serviceResponse;
         }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Movies.API.DataAccess;
+using Movies.API.Middlewares;
 using Movies.API.Repositories;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services;
@@ -46,6 +47,10 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 
+builder.Services.AddLogging();
+
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -61,6 +66,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddHttpContextAccessor();
 
+// Register Middleware
+builder.Services.AddScoped<GlobalHandleExceptionsMiddleware>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,6 +83,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalHandleExceptionsMiddleware>();
 
 app.MapControllers();
 

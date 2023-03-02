@@ -24,63 +24,50 @@ namespace Movies.API.Services
         public async Task<ServiceResponse<string>> Login(UserDto userDto)
         {
             var serviceResponse = new ServiceResponse<string>();
-            try
+
+            var user = await _authRepository.Login(userDto.Username);
+
+            if (user is null)
             {
-                var user = await _authRepository.Login(userDto.Username);
-                
-                if(user is null)
-                {
-                    throw new Exception("User not found");
-                }
-
-                if (!VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt))
-                {
-                    throw new Exception("Wrong password");
-                }
-
-                var token = CreateToken(user);
-
-                serviceResponse.Data = token;
-                serviceResponse.Message = "User logged successfully";
+                throw new Exception("User not found");
             }
-            catch(Exception ex)
+
+            if (!VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                serviceResponse.Success = false;
-                serviceResponse.Message= ex.Message;
+                throw new Exception("Wrong password");
             }
+
+            var token = CreateToken(user);
+
+            serviceResponse.Data = token;
+            serviceResponse.Message = "User logged successfully";
+
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<int>> Register(UserDto userDto)
         {
             var serviceResponse = new ServiceResponse<int>();
-            try
-            {
-                CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-                var user = new User();
+            CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-                user.Username = userDto.Username;
-                user.PasswordHash = passwordHash;
-                user.PasswordSalt = passwordSalt;
+            var user = new User();
 
-                var userId = await _authRepository.Register(user);
+            user.Username = userDto.Username;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
 
-                serviceResponse.Data= userId;
-                serviceResponse.Message =  "User created successfully";
-            }
-            catch(Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+            var userId = await _authRepository.Register(user);
+
+            serviceResponse.Data = userId;
+            serviceResponse.Message = "User created successfully";
 
             return serviceResponse;
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using(var hmac = new HMACSHA512())
+            using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
@@ -89,7 +76,7 @@ namespace Movies.API.Services
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            using(var hmac = new HMACSHA512(passwordSalt))
+            using (var hmac = new HMACSHA512(passwordSalt))
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 return (computedHash.SequenceEqual(passwordHash));

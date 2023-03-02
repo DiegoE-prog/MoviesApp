@@ -21,40 +21,30 @@ namespace Movies.API.Services
         public async Task<ServiceResponse<GetMovieWithoutCategoryDto>> AddMovieAsync(MovieToAddDto movieToAddDto)
         {
             var serviceResponse = new ServiceResponse<GetMovieWithoutCategoryDto>();
-            try
-            {
-                var movie = await _movieRepository.AddMovieAsync(movieToAddDto);
-                serviceResponse.Data = _mapper.Map<GetMovieWithoutCategoryDto>(movie);
-                serviceResponse.Message = "Movie added successfully";
-            }
-            catch(Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+
+            var movie = await _movieRepository.AddMovieAsync(movieToAddDto);
+            
+            serviceResponse.Data = _mapper.Map<GetMovieWithoutCategoryDto>(movie);
+            serviceResponse.Message = "Movie added successfully";
+
             return serviceResponse;
         }
 
-        
+
         public async Task<ServiceResponse<string>> DeleteMovieAsync(int id)
         {
             var serviceResponse = new ServiceResponse<string>();
-            try
-            {
-                if(id is 0) { throw new Exception("The Id needs to be a valid ID"); }
 
-                var isSuccesfull = await _movieRepository.DeleteMovieAsync(id);
-                if (isSuccesfull is false)
-                {
-                    throw new Exception("There is not a movie with that ID");
-                }
-                serviceResponse.Data = "Movie deleted succesfully";
-            }
-            catch(Exception ex)
+            if (id is 0) { throw new Exception("The Id needs to be a valid ID"); }
+
+            var isSuccesfull = await _movieRepository.DeleteMovieAsync(id);
+            
+            if (isSuccesfull is false)
             {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
+                throw new Exception("There is not a movie with that ID");
             }
+
+            serviceResponse.Data = "Movie deleted succesfully";
 
             return serviceResponse;
         }
@@ -62,64 +52,55 @@ namespace Movies.API.Services
         public async Task<ServiceResponse<GetMovieDto>> GetMovieByIdAsync(int id)
         {
             var serviceResponse = new ServiceResponse<GetMovieDto>();
-            try
+
+            if (id is 0) { throw new Exception("The Id needs to be a valid ID"); }
+            
+            var movie = await _movieRepository.GetMovieByIdAsync(id);
+            
+            if (movie is null)
             {
-                if (id is 0) { throw new Exception("The Id needs to be a valid ID"); }
-                var movie = await _movieRepository.GetMovieByIdAsync(id);
-                if(movie is null)
-                {
-                    throw new Exception("There is not a movie with that ID");
-                }
-                serviceResponse.Data = _mapper.Map<GetMovieDto>(movie);
+                throw new Exception("There is not a movie with that ID");
             }
-            catch(Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+            
+            serviceResponse.Data = _mapper.Map<GetMovieDto>(movie);
+
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<List<GetMovieDto>>> GetMoviesAsync()
         {
             var serviceResponse = new ServiceResponse<List<GetMovieDto>>();
-            try
+
+            var movies = await _movieRepository.GetMoviesAsync();
+            
+            if (movies is null || movies.Count == 0)
             {
-                var movies = await _movieRepository.GetMoviesAsync();
-                if (movies is null  || movies.Count == 0)
-                {
-                    throw new Exception("There are not movies");
-                }
-                serviceResponse.Data = _mapper.Map<List<GetMovieDto>>(movies);
+                throw new Exception("There are not movies");
             }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+            
+            serviceResponse.Data = _mapper.Map<List<GetMovieDto>>(movies);
+
             return serviceResponse;
         }
 
-        
+
         public async Task<ServiceResponse<GetMovieWithoutCategoryDto>> UpdateMovieAsync(MovieToUpdateDto movieToUpdateDto)
         {
             var serviceResponse = new ServiceResponse<GetMovieWithoutCategoryDto>();
-            try
+
+            if (movieToUpdateDto.CategoryId is 0) { throw new Exception("The Id needs to be a valid ID"); }
+            
+            var movie = await _movieRepository.UpdateMovieAsync(movieToUpdateDto);
+            
+            if (movie is null)
             {
-                if (movieToUpdateDto.CategoryId is 0) { throw new Exception("The Id needs to be a valid ID"); }
-                var movie = await _movieRepository.UpdateMovieAsync(movieToUpdateDto);
-                if (movie is null)
-                {
-                    throw new Exception("There is not a movie with that value");
-                }
-                serviceResponse.Data = _mapper.Map<GetMovieWithoutCategoryDto>(movie);
-                serviceResponse.Message = "Movie updated succesfully";
+                throw new Exception("There is not a movie with that value");
             }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+            
+            serviceResponse.Data = _mapper.Map<GetMovieWithoutCategoryDto>(movie);
+            serviceResponse.Message = "Movie updated succesfully";
+
+
             return serviceResponse;
         }
     }
