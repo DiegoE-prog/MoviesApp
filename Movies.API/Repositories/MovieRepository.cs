@@ -37,12 +37,14 @@ namespace Movies.API.Repositories
         {
             var movieFromDb = await _dbContext.Movies
                 .FirstOrDefaultAsync(c => c.MovieId == id);
+
             if(movieFromDb is not null)
             {
                 movieFromDb.IsActive = false;
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
+
             return false;
         }
 
