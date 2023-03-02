@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Movies.API.Dtos.Movie;
+using Movies.API.Exceptions;
 using Movies.API.Models;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
@@ -59,7 +60,7 @@ namespace Movies.API.Services
             
             if (movie is null)
             {
-                throw new Exception("There is not a movie with that ID");
+                throw new NotFoundException("There is not a movie with that ID");
             }
             
             serviceResponse.Data = _mapper.Map<GetMovieDto>(movie);
@@ -75,7 +76,7 @@ namespace Movies.API.Services
             
             if (movies is null || movies.Count == 0)
             {
-                throw new Exception("There are not movies");
+                throw new NotFoundException("There are not movies");
             }
             
             serviceResponse.Data = _mapper.Map<List<GetMovieDto>>(movies);
@@ -94,7 +95,7 @@ namespace Movies.API.Services
             
             if (movie is null)
             {
-                throw new Exception("There is not a movie with that value");
+                throw new NotFoundException("There is not a movie with that value");
             }
             
             serviceResponse.Data = _mapper.Map<GetMovieWithoutCategoryDto>(movie);

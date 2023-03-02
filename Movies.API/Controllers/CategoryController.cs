@@ -25,10 +25,6 @@ namespace Movies.API.Controllers
         {
             var response = await _categoryService.GetCategoriesAsync();
 
-            if (response.Success is false)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
 
         }
@@ -37,10 +33,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> GetCategory(int id)
         {
             var response = await _categoryService.GetCategoryByIdAsync(id);
-            if (response.Success is false)
-            {
-                return NotFound(response);
-            }
+
             return Ok(response);
         }
 
@@ -48,10 +41,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> AddCategory(CategoryToAddDto categoryToAddDto)
         {
             var response = await _categoryService.AddCategoryAsync(categoryToAddDto);
-            if (response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -59,10 +49,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> UpdateCategory(CategoryToUpdateDto categoryToUpdateDto)
         {
             var response = await _categoryService.UpdateCategoryAsync(categoryToUpdateDto);
-            if (response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -70,10 +57,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> DeleteCategory(int id)
         {
             var response = await _categoryService.DeleteCategoryAsync(id);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
     }

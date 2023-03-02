@@ -21,10 +21,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<int>>> Register(UserDto userDto)
         {
             var response = await _authService.Register(userDto);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -32,12 +29,8 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<string>>> Login(UserDto userDto)
         {
             var response = await _authService.Login(userDto);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
-
     }
 }

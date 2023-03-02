@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Movies.API.Dtos.Review;
 using Movies.API.Entities;
+using Movies.API.Exceptions;
 using Movies.API.Models;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
@@ -33,7 +34,7 @@ namespace Movies.API.Services
 
             if (movie is null)
             {
-                throw new Exception("There´s not a Movie with that Id");
+                throw new NotFoundException("There´s not a Movie with that Id");
             }
 
             var review = await _reviewRepository.AddReviewAsync(reviewToAddDto);
@@ -57,7 +58,7 @@ namespace Movies.API.Services
 
             if (!isSuccessful)
             {
-                throw new Exception("There is not a review for that movie");
+                throw new NotFoundException("There is not a review for that movie");
             }
 
             serviceResponse.Message = "Review deleted successfully";
@@ -72,7 +73,7 @@ namespace Movies.API.Services
             var reviews = await _reviewRepository.GetReviewsAsync();
 
             if (reviews.Count == 0)
-                throw new Exception("There is not reviews register yet");
+                throw new NotFoundException("There is not reviews register yet");
 
             serviceResponse.Data = _mapper.Map<List<GetReviewDto>>(reviews);
 
@@ -87,7 +88,7 @@ namespace Movies.API.Services
             var reviews = await _reviewRepository.GetReviewsByMovieAsync(movieId);
             
             if (reviews.Count == 0)
-                throw new Exception("There is not reviews register for that movie");
+                throw new NotFoundException("There is not reviews register for that movie");
 
             serviceResponse.Data = _mapper.Map<List<GetReviewDto>>(reviews);
 
@@ -102,7 +103,7 @@ namespace Movies.API.Services
             var reviews = await _reviewRepository.GetReviewsByUserAsync(userId);
             
             if (reviews.Count == 0)
-                throw new Exception("There is not reviews register for that user.");
+                throw new NotFoundException("There is not reviews register for that user.");
 
             serviceResponse.Data = _mapper.Map<List<GetReviewDto>>(reviews);
 
@@ -117,7 +118,7 @@ namespace Movies.API.Services
 
             if (review is null)
             {
-                throw new Exception("There is not a review assigned to that movie");
+                throw new NotFoundException("There is not a review assigned to that movie");
             }
 
             serviceResponse.Data = _mapper.Map<GetReviewDtoWithoutNavigation>(review);
