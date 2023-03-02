@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Movies.API.Dtos.Category;
+using Movies.API.Exceptions;
 using Movies.API.Models;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
@@ -36,7 +37,7 @@ namespace Movies.API.Services
             
             if (isSucessfull is false)
             {
-                throw new Exception("There is not a category with that ID");
+                throw new NotFoundException("There is not a category with that ID");
             }
             
             serviceResponse.Data = "Category deleted successfully";
@@ -51,7 +52,7 @@ namespace Movies.API.Services
           
             if (categories is null || categories.Count is 0)
             {
-                throw new Exception("There are not categories available");
+                throw new NotFoundException("There are not categories available");
             }
 
             serviceResponse.Data = _mapper.Map<List<GetCategoryDto>>(categories);
@@ -67,7 +68,7 @@ namespace Movies.API.Services
             
             if (category is null)
             {
-                throw new Exception("There is not a category with that ID");
+                throw new NotFoundException("There is not a category with that ID");
             
             }
             serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
@@ -83,7 +84,7 @@ namespace Movies.API.Services
             
             if (category is null)
             {
-                throw new Exception("There is not a category with that ID");
+                throw new NotFoundException("There is not a category with that ID");
             }
             serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
 

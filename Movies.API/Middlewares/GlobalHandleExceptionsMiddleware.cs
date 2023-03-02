@@ -1,4 +1,5 @@
-﻿using Movies.API.Models;
+﻿using Movies.API.Exceptions;
+using Movies.API.Models;
 using System.Net;
 using System.Text.Json;
 
@@ -19,23 +20,42 @@ namespace Movies.API.Middlewares
             {
                 await next(context);
             }
+            catch (NotFoundException ex)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+
+                await SendResponse(context, ex);
+
+            }
             catch (Exception ex)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                ServiceResponse<object> response = new()
-                {
-                    Data = null,
-                    Message = ex.Message,
-                    Success = false
-                };
-
-                string json = JsonSerializer.Serialize(response);
-
-                context.Response.ContentType = "application/json";
-
-                await context.Response.WriteAsync(json);
+                await SendResponse(context, ex);
             }
+        }
+
+        private ServiceResponse<object> CreateResponse(string message)
+        {
+            ServiceResponse<object> response = new()
+            {
+                Data = null,
+                Message = message,
+                Success = false
+            };
+
+            return response;
+        }
+
+        private async Task SendResponse(HttpContext context, Exception ex)
+        {
+            ServiceResponse<object> response = CreateResponse(ex.Message);
+
+            string json = JsonSerializer.Serialize(response);
+
+            context.Response.ContentType = "application/json";
+
+            await context.Response.WriteAsync(json);
         }
     }
 }

@@ -23,10 +23,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<List<GetReviewDto>>>> GetReviews()
         {
             var response = await _reviewService.GetReviewsAsync();
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+ 
             return Ok(response);
         }
 
@@ -34,10 +31,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<List<GetReviewDto>>>> GetReviewsByUser(int userId)
         {
             var response = await _reviewService.GetReviewsByUserAsync(userId);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -45,10 +39,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<List<GetReviewDto>>>> GetReviewsByMovie(int movieId)
         {
             var response = await _reviewService.GetReviewsByMovieAsync(movieId);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -58,10 +49,7 @@ namespace Movies.API.Controllers
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var response = await _reviewService.GetReviewsByUserAsync(userId);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -70,10 +58,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetReviewDto>>> AddReview(ReviewToAddDto reviewToAddDto)
         {
             var response = await _reviewService.AddReviewAsync(reviewToAddDto);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -82,10 +67,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetReviewDto>>> UpdateReview(ReviewToUpdateDto reviewToUpdateDto)
         {
             var response = await _reviewService.UpdateReviewAsync(reviewToUpdateDto);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -94,10 +76,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<object>>> DeleteReview(int movieId)
         { 
             var response = await _reviewService.DeleteReviewAsync(movieId);
-            if(response.Success is false)
-            {
-                return BadRequest(response);   
-            }
+
             return Ok(response);
         }
     }

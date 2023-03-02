@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Movies.API.Dtos.User;
 using Movies.API.Entities;
+using Movies.API.Exceptions;
 using Movies.API.Models;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
@@ -29,7 +30,7 @@ namespace Movies.API.Services
 
             if (user is null)
             {
-                throw new Exception("User not found");
+                throw new NotFoundException("User not found");
             }
 
             if (!VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt))

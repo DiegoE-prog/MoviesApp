@@ -23,10 +23,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<List<GetMovieDto>>>> GetMovies()
         {
             var response = await _movieService.GetMoviesAsync();
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -35,10 +32,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetMovieDto>>> GetMovie(int id)
         {
             var response = await _movieService.GetMovieByIdAsync(id);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -47,10 +41,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetMovieDto>>> AddMovie(MovieToAddDto movieToAddDto)
         {
             var response = await _movieService.AddMovieAsync(movieToAddDto);
-            if (response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -59,10 +50,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<GetMovieDto>>> UpdateMovie(MovieToUpdateDto movieToUpdateDto)
         {
             var response = await _movieService.UpdateMovieAsync(movieToUpdateDto);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
 
@@ -71,10 +59,7 @@ namespace Movies.API.Controllers
         public async Task<ActionResult<ServiceResponse<string>>> DeleteMovie(int id)
         {
             var response = await _movieService.DeleteMovieAsync(id);
-            if(response.Success is false)
-            {
-                return BadRequest(response);
-            }
+
             return Ok(response);
         }
     }
