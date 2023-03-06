@@ -36,7 +36,10 @@ namespace Movies.API.Services
         {
             var serviceResponse = new ServiceResponse<string>();
 
-            if (id is 0) { throw new Exception("The Id needs to be a valid ID"); }
+            if (id is 0) 
+            { 
+                throw new Exception("The Id needs to be a valid ID");
+            }
 
             var isSuccesfull = await _movieRepository.DeleteMovieAsync(id);
             
