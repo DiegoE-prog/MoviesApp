@@ -5,7 +5,7 @@ using Movies.WEB.Services.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
-SD.APIBase = builder.Configuration["ServiceUrls:CategoryAPI"];
+SD.APIBase = builder.Configuration["ServiceUrls:CategoryAPIRemote"];
 
 builder.Services.AddHttpClient<ICategoryService, CategoryService>();
 builder.Services.AddHttpClient<IMovieService, MoviesService>();

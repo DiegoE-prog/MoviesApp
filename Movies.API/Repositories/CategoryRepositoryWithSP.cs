@@ -44,7 +44,7 @@ namespace Movies.API.Repositories
         public async Task<List<Category>> GetCategoriesAsync()
         {
             var categories = await _dbContext.Categories
-                .FromSql($"sp_GetAllCategories").ToListAsync();
+                .FromSqlInterpolated($"sp_GetAllCategories").ToListAsync();
 
             return categories;
         }
