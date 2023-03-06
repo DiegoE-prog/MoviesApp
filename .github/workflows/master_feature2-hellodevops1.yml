@@ -19,8 +19,10 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1'
-          include-prerelease: true
+          dotnet-version: '6.0.x'
+          
+      - name: Restore Dependencies
+        run: dotnet restore
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -33,6 +35,17 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
+      - name: Install EntityFrameworkCore Tools
+        run: |
+            dotnet new tool-manifest
+            dotnet tool install dotnet-ef
+      - name: Generate EF Core Migration Script
+        run: dotnet ef migrations script --idempotent --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --context MoviesApp.Movies.API.DataAccess.DataContext --project ${{ github.workspace}}/MoviesApp/Movies.API/Movies.API.csproj
+        
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dll-updates
+          path: ${{env.DOTNET_ROOT}}/sql/sql-script.sql
 
   deploy:
     runs-on: windows-latest
@@ -43,9 +56,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: .net-app
+        uses: actions/download-artifact@v3
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -54,4 +65,11 @@ jobs:
           app-name: 'feature2-hellodevops1'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_238D01735CAE4C02A3513B4E283FC863 }}
-          package: .
+          package: ./.net-app/
+      - name: Azure SQL Deploy
+        uses: Azure/sql-action@v2
+        with: 
+          # The connection string, including authentitcation information, for the Azure SQL Server database.
+          connection-string: ${{secret.SQL_CONNECTION_STRING}}
+          # Path to the file used for this action. Supported file types are .sql .dacpac or .sqlproj
+          path: ./ddl-updates/sql-script.sql
