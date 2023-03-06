@@ -70,6 +70,6 @@ jobs:
         uses: Azure/sql-action@v2
         with: 
           # The connection string, including authentitcation information, for the Azure SQL Server database.
-          connection-string: ${{secret.SQL_CONNECTION_STRING}}
+          connection-string: ${{secrets.SQL_CONNECTION_STRING}}
           # Path to the file used for this action. Supported file types are .sql .dacpac or .sqlproj
           path: ./ddl-updates/sql-script.sql
