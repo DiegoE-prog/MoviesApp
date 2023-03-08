@@ -2,14 +2,14 @@
 
 namespace Movies.API.Dtos.Category
 {
-    public class CategoryToUpdateDto
+    public record CategoryToUpdateDto
     {
         [Required(ErrorMessage = "CategoryId is a required Field")]
-        public int CategoryId { get; set; }
+        public int CategoryId { get; init; }
 
         [Required(ErrorMessage = "Name is a required field")]
         [MaxLength(25)]
         [MinLength(5)]
-        public string Name { get; set; } = String.Empty;
+        public string? Name { get; init; }
     }
 }

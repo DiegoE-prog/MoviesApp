@@ -2,11 +2,11 @@
 
 namespace Movies.API.Dtos.Category
 {
-    public class CategoryToAddDto
+    public record CategoryToAddDto
     {
         [Required(ErrorMessage ="Name is a required field")]
         [MaxLength(25)]
         [MinLength(5)]
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; init; } = String.Empty;
     }
 }
