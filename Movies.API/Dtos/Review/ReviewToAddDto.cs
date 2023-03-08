@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Movies.API.Dtos.Review
 {
-    public class ReviewToAddDto
+    public record ReviewToAddDto
     {
         [Required(ErrorMessage = "ReviewText is a required field")]
-        public string ReviewText { get; set; } = string.Empty;
+        public string ReviewText { get; init; } = string.Empty;
         [Required(ErrorMessage = "MovieId is a required field")]
-        public int MovieId { get; set; }
+        public int MovieId { get; init; }
     }
 }

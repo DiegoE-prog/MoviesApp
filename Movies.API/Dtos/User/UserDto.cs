@@ -2,11 +2,11 @@
 
 namespace Movies.API.Dtos.User
 {
-    public class UserDto
+    public record UserDto
     {
         [Required(ErrorMessage = "Username is a required field")]
-        public string Username { get; set; } = string.Empty;
+        public string? Username { get; init; } 
         [Required(ErrorMessage = "Password is a required field")]
-        public string Password { get; set; } = string.Empty;
+        public string? Password { get; init; }
     }
 }

@@ -4,24 +4,24 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Movies.API.Dtos.Movie
 {
-    public class MovieToUpdateDto
+    public record MovieToUpdateDto
     {
         [Required(ErrorMessage = "MovieId is a required field")]
-        public int MovieId { get; set; }
+        public int MovieId { get; init; }
 
         [Required(ErrorMessage = "Title is a required field")]
-        public string Title { get; set; } = string.Empty;
+        public string? Title { get; init; } 
 
         [Required(ErrorMessage = "Description is a required field")]
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; init; } 
 
         [Required(ErrorMessage = "ReleaseDate is a required field")]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime ReleaseDate { get; init; }
 
         [Required(ErrorMessage = "PosterUrl is a required field")]
-        public string? PosterUrl { get; set; } = string.Empty;
+        public string? PosterUrl { get; init; }
 
         [Required(ErrorMessage = "CategoryId is a required field")]
-        public int CategoryId { get; set; }
+        public int CategoryId { get; init; }
     }
 }

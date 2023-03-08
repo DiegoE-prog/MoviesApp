@@ -5,8 +5,6 @@ using Movies.WEB.Services.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
-SD.APIBase = builder.Configuration["ServiceUrls:CategoryAPIRemote"];
-
 builder.Services.AddHttpClient<ICategoryService, CategoryService>();
 builder.Services.AddHttpClient<IMovieService, MoviesService>();
 builder.Services.AddHttpClient<IAuthService, AuthService>();
@@ -39,8 +37,15 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    SD.APIBase = builder.Configuration["ServiceUrls:CategoryAPILocal"];
+}
 
-
+if (app.Environment.IsProduction())
+{
+    SD.APIBase = builder.Configuration["ServiceUrls:CategoryAPIRemote"];
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

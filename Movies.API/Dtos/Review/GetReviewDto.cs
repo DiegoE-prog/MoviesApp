@@ -6,11 +6,10 @@ namespace Movies.API.Dtos.Review
 {
     public class GetReviewDto
     {
-        public int ReviewId { get; set; }
-        public string ReviewText { get; set; } = string.Empty;
-        [DisplayFormat(DataFormatString = "DD/MM/yyyy")]
-        public DateTime ReviewDate { get; set; }
-        public GetUserForReviewDto? User { get; set; }
-        public GetMovieForReviewDto? Movie { get; set; }
+        public int ReviewId { get; init; }
+        public string? ReviewText { get; init; } 
+        public DateTime ReviewDate { get; init; }
+        public GetUserForReviewDto? User { get; init; }
+        public GetMovieForReviewDto? Movie { get; init; }
     }
 }
