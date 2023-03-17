@@ -36,7 +36,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 //Register Repositories
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepositoryUsingBCL>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRespository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();

@@ -21,9 +21,12 @@ namespace Movies.API.Services
         public async Task<ServiceResponse<GetCategoryDto>> AddCategoryAsync(CategoryToAddDto categoryToAddDto)
         {
             var serviceResponse = new ServiceResponse<GetCategoryDto>();
-            var category = await _categoryRepository.AddCategoryAsync(categoryToAddDto);
 
-            serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
+            var IsSuccesfull = await _categoryRepository.AddCategoryAsync(categoryToAddDto);
+
+            if (IsSuccesfull is false)
+                throw new BadRequestException();
+
             serviceResponse.Message = "Category Added Successfully";
 
             return serviceResponse;
@@ -80,13 +83,14 @@ namespace Movies.API.Services
         {
             var serviceResponse = new ServiceResponse<GetCategoryDto>();
 
-            var category = await _categoryRepository.UpdateCategoryAsync(categoryToUpdateDto);
+            var isSucessfull = await _categoryRepository.UpdateCategoryAsync(categoryToUpdateDto);
             
-            if (category is null)
+            if (isSucessfull is false)
             {
                 throw new NotFoundException("There is not a category with that ID");
             }
-            serviceResponse.Data = _mapper.Map<GetCategoryDto>(category);
+
+            serviceResponse.Message = "Category updated successfully";
 
             return serviceResponse;
         }
