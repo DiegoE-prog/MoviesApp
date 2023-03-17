@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Movies.Common.Models.Dtos.Movie;
 using Movies.API.Exceptions;
-using Movies.API.Models;
+using Movies.Common.Models.Http;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
 

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.WEB.Models;
-using Movies.WEB.Models.Dtos;
 using Movies.Common.Models.Dtos.Movie;
 using Movies.WEB.Services.IServices;
 using Newtonsoft.Json;
@@ -11,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using Movies.Common.Models.Dtos.Category;
+using Movies.WEB.Models.Http;
 
 namespace Movies.WEB.Controllers
 {

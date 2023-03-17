@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Movies.Common.Models.Dtos.Category;
 using Movies.API.Exceptions;
-using Movies.API.Models;
+using Movies.Common.Models.Http;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
 

@@ -1,5 +1,5 @@
 ﻿using Movies.Common.Models.Dtos.Movie;
-using Movies.API.Entities;
+using Movies.DataAccess.Entities;
 
 namespace Movies.API.Repositories.Interfaces
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Movies.Common.Models.Dtos.Review;
-using Movies.WEB.Models.Dtos;
+using Movies.WEB.Models.Http;
 using Movies.WEB.Services.IServices;
 using Newtonsoft.Json;
 using System.Security.Claims;

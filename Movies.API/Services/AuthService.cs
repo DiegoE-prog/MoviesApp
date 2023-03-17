@@ -1,8 +1,8 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Movies.Common.Models.Dtos.User;
-using Movies.API.Entities;
+using Movies.DataAccess.Entities;
 using Movies.API.Exceptions;
-using Movies.API.Models;
+using Movies.Common.Models.Http;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,14 +26,14 @@ namespace Movies.API.Services
         {
             var serviceResponse = new ServiceResponse<string>();
 
-            var user = await _authRepository.Login(userDto.Username);
+            var user = await _authRepository.Login(userDto.Username!);
 
             if (user is null)
             {
                 throw new NotFoundException("User not found");
             }
 
-            if (!VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt))
+            if (!VerifyPasswordHash(userDto.Password!, user.PasswordHash, user.PasswordSalt))
             {
                 throw new Exception("Wrong password");
             }
@@ -50,11 +50,11 @@ namespace Movies.API.Services
         {
             var serviceResponse = new ServiceResponse<int>();
 
-            CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            CreatePasswordHash(userDto.Password!, out byte[] passwordHash, out byte[] passwordSalt);
 
             var user = new User();
 
-            user.Username = userDto.Username;
+            user.Username = userDto.Username!;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 

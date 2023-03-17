@@ -1,5 +1,4 @@
-﻿
-namespace Movies.WEB.Models.Dtos
+﻿namespace Movies.WEB.Models.Http
 {
     public class ApiRequest
     {

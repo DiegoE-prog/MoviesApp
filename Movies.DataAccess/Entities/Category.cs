@@ -1,4 +1,4 @@
-﻿namespace Movies.API.Entities
+﻿namespace Movies.DataAccess.Entities
 {
     public class Category
     {

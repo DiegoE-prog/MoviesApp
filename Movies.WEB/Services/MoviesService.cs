@@ -1,4 +1,4 @@
-﻿using Movies.WEB.Models.Dtos;
+﻿using Movies.WEB.Models.Http;
 using Movies.Common.Models.Dtos.Movie;
 using Movies.WEB.Services.IServices;
 

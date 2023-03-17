@@ -1,5 +1,5 @@
 ﻿using Movies.Common.Models.Dtos.Review;
-using Movies.API.Models;
+using Movies.Common.Models.Http;
 
 namespace Movies.API.Services.Interfaces
 {

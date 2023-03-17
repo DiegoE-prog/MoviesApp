@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Movies.API.DataAccess;
+using Movies.DataAccess.Context;
 using Movies.Common.Models.Dtos.Category;
-using Movies.API.Entities;
+using Movies.DataAccess.Entities;
 using Movies.API.Repositories.Interfaces;
 using System.Runtime.CompilerServices;
 

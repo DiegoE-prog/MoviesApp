@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Movies.WEB.Models.Dtos;
-using Movies.WEB.Models.Dtos.Review;
+using Movies.Common.Models.Dtos.Review;
+using Movies.WEB.Models.Http;
 using Movies.WEB.Services.IServices;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -26,7 +26,7 @@ namespace Movies.WEB.Controllers
 
             if(response is not null && response.Success)
             {
-                var reviews = JsonConvert.DeserializeObject<List<ReviewDto>>(Convert.ToString(response.Data)!);
+                var reviews = JsonConvert.DeserializeObject<List<GetReviewDto>>(Convert.ToString(response.Data)!);
 
                 return View(reviews);
             }

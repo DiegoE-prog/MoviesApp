@@ -1,5 +1,5 @@
 ﻿using Movies.API.Exceptions;
-using Movies.API.Models;
+using Movies.Common.Models.Http;
 using System.Net;
 using System.Text.Json;
 

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Movies.API.DataAccess;
+using Movies.DataAccess.Entities;
 using Movies.Common.Models.Dtos.Movie;
-using Movies.API.Entities;
+using Movies.DataAccess.Context;
 using Movies.API.Repositories.Interfaces;
 
 namespace Movies.API.Repositories
@@ -72,8 +72,8 @@ namespace Movies.API.Repositories
             var movieFromDb = await _dbContext.Movies.FirstOrDefaultAsync(c => c.MovieId == movieToUpdateDto.MovieId);
             if(movieFromDb is not null)
             {
-                movieFromDb.Title = movieToUpdateDto.Title;
-                movieFromDb.Description = movieToUpdateDto.Description;
+                movieFromDb.Title = movieToUpdateDto.Title!;
+                movieFromDb.Description = movieToUpdateDto.Description!;
                 movieFromDb.ReleaseDate= movieToUpdateDto.ReleaseDate;
                 movieFromDb.PosterUrl = movieToUpdateDto.PosterUrl;
                 movieFromDb.CategoryId = movieToUpdateDto.CategoryId;
