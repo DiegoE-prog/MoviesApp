@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Movies.WEB.Models.Dtos;
+using Movies.Common.Models.Dtos.User;
+using Movies.WEB.Models.Http;
 using Movies.WEB.Services.IServices;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -24,7 +25,7 @@ namespace Movies.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        public async Task<IActionResult> Login(UserDto loginDto)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +62,7 @@ namespace Movies.WEB.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterDto registerDto)
+        public async Task<IActionResult> Register(UserDto registerDto)
         {
             if(ModelState.IsValid)
             {

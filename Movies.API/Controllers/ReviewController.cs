@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Movies.API.Dtos.Review;
-using Movies.API.Models;
+using Movies.Common.Models.Dtos.Review;
+using Movies.Common.Models.Http;
 using Movies.API.Services.Interfaces;
 using System.Security.Claims;
 

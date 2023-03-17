@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Movies.API.Dtos.Category;
-using Movies.API.Entities;
+using Movies.Common.Models.Dtos.Category;
+using Movies.DataAccess.Entities;
 
 namespace Movies.API.Repositories.Interfaces
 {

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Movies.WEB.Models.Dtos;
+using Movies.Common.Models.Dtos.Category;
+using Movies.Common.Models.Dtos.Movie;
+using Movies.WEB.Models.Http;
 using Movies.WEB.Services.IServices;
 using Newtonsoft.Json;
 using System.Data;
@@ -24,7 +26,7 @@ namespace Movies.WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<MovieDto> movies = new();
+            List<GetMovieDto> movies = new();
 
             //token = HttpContext.Session.GetString("access_token")!;
 
@@ -34,7 +36,7 @@ namespace Movies.WEB.Controllers
 
             if(response is not null && response.Success)
             {
-                movies = JsonConvert.DeserializeObject<List<MovieDto>>(Convert.ToString(response.Data)!)!;
+                movies = JsonConvert.DeserializeObject<List<GetMovieDto>>(Convert.ToString(response.Data)!)!;
             }
 
             return View(movies);       
@@ -49,7 +51,7 @@ namespace Movies.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MovieCreate(MovieToCreateDto movie)
+        public async Task<IActionResult> MovieCreate(MovieToAddDto movie)
         {
             if(ModelState.IsValid)
             {
@@ -107,7 +109,7 @@ namespace Movies.WEB.Controllers
 
             if (response.Success)
             {
-                var movie = JsonConvert.DeserializeObject<MovieDto>(Convert.ToString(response.Data)!);
+                var movie = JsonConvert.DeserializeObject<GetMovieDto>(Convert.ToString(response.Data)!);
                 ViewBag.Categories = await GetCategories();
                 return View(movie);
             }
@@ -117,7 +119,7 @@ namespace Movies.WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MovieDelete(MovieDto movie)
+        public async Task<IActionResult> MovieDelete(GetMovieDto movie)
         {
             var response = await _movieService.DeleteMovieAsync<ResponseDto>(movie.MovieId, token);
 
@@ -136,7 +138,7 @@ namespace Movies.WEB.Controllers
 
             if (response is not null && response.Success)
             {
-                var categories = JsonConvert.DeserializeObject<List<CategoryDto>>(Convert.ToString(response.Data)!)!;
+                var categories = JsonConvert.DeserializeObject<List<GetCategoryDto>>(Convert.ToString(response.Data)!)!;
 
                 foreach (var category in categories)
                 {

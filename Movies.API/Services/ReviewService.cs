@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using Movies.API.Dtos.Review;
-using Movies.API.Entities;
+using Movies.Common.Models.Dtos.Review;
 using Movies.API.Exceptions;
-using Movies.API.Models;
+using Movies.Common.Models.Http;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
 

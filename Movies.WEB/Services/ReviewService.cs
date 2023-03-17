@@ -1,5 +1,5 @@
-﻿using Movies.WEB.Models.Dtos;
-using Movies.WEB.Models.Dtos.Review;
+﻿using Movies.Common.Models.Dtos.Review;
+using Movies.WEB.Models.Http;
 using Movies.WEB.Services.IServices;
 
 namespace Movies.WEB.Services
@@ -13,7 +13,7 @@ namespace Movies.WEB.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public Task<T> AddReviewAsync<T>(ReviewToCreate reviewToAdd, string token)
+        public Task<T> AddReviewAsync<T>(ReviewToAddDto reviewToAdd, string token)
         {
             return this.SendAsync<T>(new ApiRequest()
             {
@@ -74,7 +74,7 @@ namespace Movies.WEB.Services
             });
         }
 
-        public Task<T> UpdateReviewAsync<T>(ReviewToUpdate reviewToUpdate, string token)
+        public Task<T> UpdateReviewAsync<T>(ReviewToUpdateDto reviewToUpdate, string token)
         {
             return this.SendAsync<T>(new ApiRequest()
             {

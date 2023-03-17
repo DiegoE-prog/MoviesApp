@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Movies.API.Dtos.Category;
-using Movies.API.Entities;
-using Movies.API.Models;
+using Movies.Common.Models.Dtos.Category;
+using Movies.DataAccess.Entities;
+using Movies.Common.Models.Http;
 using Movies.API.Repositories.Interfaces;
 using Movies.API.Services.Interfaces;
 

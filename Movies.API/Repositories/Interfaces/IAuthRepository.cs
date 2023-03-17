@@ -1,5 +1,4 @@
-﻿using Movies.API.Entities;
-using Movies.API.Models;
+﻿using Movies.DataAccess.Entities;
 
 namespace Movies.API.Repositories.Interfaces
 {

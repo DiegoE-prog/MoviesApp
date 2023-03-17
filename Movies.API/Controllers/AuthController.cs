@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Movies.API.Dtos.User;
-using Movies.API.Models;
+using Movies.Common.Models.Dtos.User;
+using Movies.Common.Models.Http;
 using Movies.API.Services.Interfaces;
 
 namespace Movies.API.Controllers

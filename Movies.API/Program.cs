@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Movies.API.DataAccess;
 using Movies.API.Middlewares;
 using Movies.API.Repositories;
 using Movies.API.Repositories.Interfaces;
@@ -10,13 +9,14 @@ using Movies.API.Services;
 using Movies.API.Services.Interfaces;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using Movies.DataAccess;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Add service for DbContext
-builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDataAccessServices(builder.Configuration);
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers();

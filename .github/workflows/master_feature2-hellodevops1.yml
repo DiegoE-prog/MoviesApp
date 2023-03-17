@@ -42,7 +42,7 @@ jobs:
             dotnet new tool-manifest
             dotnet tool install dotnet-ef
       - name: Generate EF Core Migration Script
-        run: dotnet ef migrations script --idempotent --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --context Movies.API.DataAccess.DataContext --project ${{ github.workspace}}/Movies.API/Movies.API.csproj
+        run: dotnet ef migrations script --idempotent --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --context Movies.DataAccess.Context.DataContext --project ${{ github.workspace}}/Movies.API/Movies.API.csproj
         
       - uses: actions/upload-artifact@v3
         with:

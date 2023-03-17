@@ -1,6 +1,5 @@
-﻿using Movies.API.Dtos.Movie;
-using Movies.API.Entities;
-using Movies.API.Models;
+﻿using Movies.Common.Models.Dtos.Movie;
+using Movies.Common.Models.Http;
 
 namespace Movies.API.Services.Interfaces
 {
