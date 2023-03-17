@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using Movies.API.Dtos.Category;
-using Movies.API.Dtos.Movie;
-using Movies.API.Dtos.Review;
-using Movies.API.Dtos.User;
+using Movies.Common.Models.Dtos.Category;
+using Movies.Common.Models.Dtos.Movie;
+using Movies.Common.Models.Dtos.Review;
 using Movies.API.Entities;
 
 namespace Movies.API.Profiles

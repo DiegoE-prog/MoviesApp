@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Movies.API.Dtos.Category
+namespace Movies.Common.Models.Dtos.Category
 {
     public record CategoryToUpdateDto
     {

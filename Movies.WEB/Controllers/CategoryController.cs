@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.WEB.Models;
 using Movies.WEB.Models.Dtos;
+using Movies.Common.Models.Dtos.Movie;
 using Movies.WEB.Services.IServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
+using Movies.Common.Models.Dtos.Category;
 
 namespace Movies.WEB.Controllers
 {
@@ -26,7 +28,7 @@ namespace Movies.WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<CategoryDto> categories = new();
+            List<GetCategoryDto> categories = new();
 
             //token = HttpContext.Session.GetString("access_token")!;
 
@@ -36,7 +38,7 @@ namespace Movies.WEB.Controllers
             
             if(response is not null && response.Success)
             {
-                categories = JsonConvert.DeserializeObject<List<CategoryDto>>(Convert.ToString(response.Data)!)!;   
+                categories = JsonConvert.DeserializeObject<List<GetCategoryDto>>(Convert.ToString(response.Data)!)!;   
             }
 
             return View(categories);
@@ -50,7 +52,7 @@ namespace Movies.WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CategoryCreate(CategoryDto categoryDto)
+        public async Task<IActionResult> CategoryCreate(CategoryToAddDto categoryDto)
         {
             if (ModelState.IsValid)
             {
@@ -71,13 +73,13 @@ namespace Movies.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> CategoryEdit(int categoryId)
         {
-            CategoryDto category = new();
+            CategoryToUpdateDto category = new();
 
             var response = await _categoryService.GetCategoryByIdAsync<ResponseDto>(categoryId, token);
 
             if (response is not null && response.Success)
             {
-                category = JsonConvert.DeserializeObject<CategoryDto>(Convert.ToString(response.Data)!)!;
+                category = JsonConvert.DeserializeObject<CategoryToUpdateDto>(Convert.ToString(response.Data)!)!;
             }
 
             return View(category);
@@ -85,7 +87,7 @@ namespace Movies.WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CategoryEdit(CategoryDto categoryDto)
+        public async Task<IActionResult> CategoryEdit(CategoryToUpdateDto categoryDto)
         {
             if (ModelState.IsValid)
             {
@@ -102,13 +104,13 @@ namespace Movies.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> CategoryDelete(int categoryId)
         {
-            CategoryDto category = new();
+            GetCategoryDto category = new();
 
             var response = await _categoryService.GetCategoryByIdAsync<ResponseDto>(categoryId, token);
 
             if (response is not null && response.Success)
             {
-                category = JsonConvert.DeserializeObject<CategoryDto>(Convert.ToString(response.Data)!)!;
+                category = JsonConvert.DeserializeObject<GetCategoryDto>(Convert.ToString(response.Data)!)!;
             }
 
             return View(category);
@@ -116,7 +118,7 @@ namespace Movies.WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CategoryDelete(CategoryDto categoryDto)
+        public async Task<IActionResult> CategoryDelete(GetCategoryDto categoryDto)
         {
             var response = await _categoryService.DeleteCategoryAsync<ResponseDto>(categoryDto.CategoryId, token);
 

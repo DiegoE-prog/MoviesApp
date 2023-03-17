@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Movies.API.Dtos.Review
+﻿namespace Movies.Common.Models.Dtos.Review
 {
     public record GetReviewDtoWithoutNavigation
     {

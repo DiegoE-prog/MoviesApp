@@ -1,4 +1,5 @@
 ﻿using Movies.WEB.Models.Dtos;
+using Movies.Common.Models.Dtos.Movie;
 using Movies.WEB.Services.IServices;
 
 namespace Movies.WEB.Services
@@ -12,7 +13,7 @@ namespace Movies.WEB.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<T> CreateMovieAsync<T>(MovieToCreateDto movieDto, string token)
+        public async Task<T> CreateMovieAsync<T>(MovieToAddDto movieDto, string token)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {

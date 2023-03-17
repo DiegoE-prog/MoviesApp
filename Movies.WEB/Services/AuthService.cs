@@ -1,4 +1,5 @@
-﻿using Movies.WEB.Models.Dtos;
+﻿using Movies.Common.Models.Dtos.User;
+using Movies.WEB.Models.Dtos;
 using Movies.WEB.Services.IServices;
 
 namespace Movies.WEB.Services
@@ -12,23 +13,23 @@ namespace Movies.WEB.Services
             _httppClientFactory = httppClientFactory;
         }
 
-        public async Task<T> LoginAsync<T>(LoginDto login)
+        public async Task<T> LoginAsync<T>(UserDto user)
         {
             return await this.SendAsync<T>(new ApiRequest
             {
                 ApiType = SD.ApiType.POST,
                 Url = $"{SD.APIBase}api/Auth/Login",
-                Data = login
+                Data = user
             });
         }
 
-        public async Task<T> RegisterAsync<T>(RegisterDto register)
+        public async Task<T> RegisterAsync<T>(UserDto user)
         {
             return await this.SendAsync<T>(new ApiRequest
             {
                 ApiType = SD.ApiType.POST,
                 Url = $"{SD.APIBase}api/Auth/Register",
-                Data = register
+                Data = user
             });
         }
     }

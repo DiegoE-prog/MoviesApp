@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Movies.API.DataAccess;
-using Movies.API.Dtos.Movie;
+using Movies.Common.Models.Dtos.Movie;
 using Movies.API.Entities;
 using Movies.API.Repositories.Interfaces;
 

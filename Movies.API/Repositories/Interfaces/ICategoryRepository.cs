@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Movies.API.Dtos.Category;
+using Movies.Common.Models.Dtos.Category;
 using Movies.API.Entities;
 
 namespace Movies.API.Repositories.Interfaces

@@ -1,4 +1,4 @@
-﻿using Movies.API.Dtos.Movie;
+﻿using Movies.Common.Models.Dtos.Movie;
 using Movies.API.Entities;
 
 namespace Movies.API.Repositories.Interfaces

@@ -1,7 +1,5 @@
-﻿using Movies.API.Dtos.Category;
-using System.ComponentModel.DataAnnotations;
-
-namespace Movies.API.Dtos.Movie
+﻿using Movies.Common.Models.Dtos.Category;
+namespace Movies.Common.Models.Dtos.Movie
 {
     public record GetMovieDto
     {

@@ -1,4 +1,4 @@
-﻿using Movies.API.Dtos.Category;
+﻿using Movies.Common.Models.Dtos.Category;
 using Movies.API.Models;
 
 namespace Movies.API.Services.Interfaces

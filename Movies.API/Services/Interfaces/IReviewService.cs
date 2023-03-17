@@ -1,4 +1,4 @@
-﻿using Movies.API.Dtos.Review;
+﻿using Movies.Common.Models.Dtos.Review;
 using Movies.API.Models;
 
 namespace Movies.API.Services.Interfaces

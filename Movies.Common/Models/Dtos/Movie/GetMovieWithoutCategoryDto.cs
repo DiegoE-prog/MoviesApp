@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Movies.API.Dtos.Movie
+﻿namespace Movies.Common.Models.Dtos.Movie
 {
     public record GetMovieWithoutCategoryDto
     {

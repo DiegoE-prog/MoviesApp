@@ -1,4 +1,4 @@
-﻿using Movies.WEB.Models.Dtos;
+﻿using Movies.Common.Models.Dtos.Movie;
 
 namespace Movies.WEB.Services.IServices
 {
@@ -6,7 +6,7 @@ namespace Movies.WEB.Services.IServices
     {
         Task<T> GetMoviesAsync<T>(string token);
         Task<T> GetMovieByIdAsync<T>(int id, string token);
-        Task<T> CreateMovieAsync<T>(MovieToCreateDto movieDto, string token);
+        Task<T> CreateMovieAsync<T>(MovieToAddDto movieDto, string token);
         Task<T> UpdateMovieAsync<T>(MovieToUpdateDto movieDto, string token);
         Task<T> DeleteMovieAsync<T>(int id, string token);
     }

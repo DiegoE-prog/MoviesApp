@@ -1,4 +1,4 @@
-﻿using Movies.WEB.Models.Dtos;
+﻿using Movies.Common.Models.Dtos.Category;
 
 namespace Movies.WEB.Services.IServices
 {
@@ -6,8 +6,8 @@ namespace Movies.WEB.Services.IServices
     {
         Task<T> GetCategoriesAsync<T>(string token);
         Task<T> GetCategoryByIdAsync<T>(int id, string token);
-        Task<T> CreateCategoryAsync<T>(CategoryDto categoryDto, string token);
-        Task<T> UpdateCategoryAsync<T>(CategoryDto categoryDto, string token);
+        Task<T> CreateCategoryAsync<T>(CategoryToAddDto categoryDto, string token);
+        Task<T> UpdateCategoryAsync<T>(CategoryToUpdateDto categoryDto, string token);
         Task<T> DeleteCategoryAsync<T>(int id, string token);
     }
 }

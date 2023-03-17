@@ -1,4 +1,4 @@
-﻿using Movies.API.Dtos.User;
+﻿using Movies.Common.Models.Dtos.User;
 using Movies.API.Entities;
 using Movies.API.Models;
 

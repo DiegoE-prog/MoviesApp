@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Movies.API.Dtos.Movie;
+using Movies.Common.Models.Dtos.Movie;
 using Movies.API.Exceptions;
 using Movies.API.Models;
 using Movies.API.Repositories.Interfaces;

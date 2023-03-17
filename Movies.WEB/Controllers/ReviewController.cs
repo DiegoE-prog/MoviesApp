@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Movies.Common.Models.Dtos.Review;
 using Movies.WEB.Models.Dtos;
-using Movies.WEB.Models.Dtos.Review;
 using Movies.WEB.Services.IServices;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -20,7 +20,7 @@ namespace Movies.WEB.Controllers
         [HttpGet]
         public IActionResult ReviewCreate(int movieId)
         {
-            return View(new ReviewToCreate()
+            return View(new ReviewToAddDto()
             {
                 MovieId = movieId
             });
@@ -28,7 +28,7 @@ namespace Movies.WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ReviewCreate(ReviewToCreate reviewToCreate)
+        public async Task<IActionResult> ReviewCreate(ReviewToAddDto reviewToCreate)
         {
             token = User.FindFirstValue("Token");
 
@@ -54,11 +54,11 @@ namespace Movies.WEB.Controllers
 
             if (response is not null && response.Success)
             {
-                var reviews = JsonConvert.DeserializeObject<List<ReviewDto>>(Convert.ToString(response.Data)!)!;
+                var reviews = JsonConvert.DeserializeObject<List<GetReviewDto>>(Convert.ToString(response.Data)!)!;
 
                 var review = reviews.Find(c => c.User.Username == User.Identity.Name);
 
-                return View(new ReviewToUpdate() { MovieId = movieId, ReviewText = review.ReviewText });
+                return View(new ReviewToUpdateDto() { MovieId = movieId, ReviewText = review.ReviewText });
             }
 
             return View();
@@ -66,7 +66,7 @@ namespace Movies.WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ReviewEdit(ReviewToUpdate reviewToUpdate)
+        public async Task<IActionResult> ReviewEdit(ReviewToUpdateDto reviewToUpdate)
         {
             var response = await _reviewService.UpdateReviewAsync<ResponseDto>(reviewToUpdate, token);
 
@@ -87,11 +87,11 @@ namespace Movies.WEB.Controllers
 
             if (response is not null && response.Success)
             {
-                var reviews = JsonConvert.DeserializeObject<List<ReviewDto>>(Convert.ToString(response.Data)!)!;
+                var reviews = JsonConvert.DeserializeObject<List<GetReviewDto>>(Convert.ToString(response.Data)!)!;
 
                 var review = reviews.Find(c => c.User.Username == User.Identity.Name);
 
-                return View(new ReviewToCreate() { MovieId = movieId, ReviewText = review.ReviewText });
+                return View(new ReviewToAddDto() { MovieId = movieId, ReviewText = review.ReviewText });
             }
 
             return View();
@@ -99,7 +99,7 @@ namespace Movies.WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ReviewDelete(ReviewToCreate review)
+        public async Task<IActionResult> ReviewDelete(ReviewToAddDto review)
         {
             var response = await _reviewService.DeleteReviewAsync<ResponseDto>(review.MovieId, token);
 

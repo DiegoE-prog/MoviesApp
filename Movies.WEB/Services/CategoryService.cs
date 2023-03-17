@@ -1,4 +1,5 @@
 ﻿using Movies.WEB.Models.Dtos;
+using Movies.Common.Models.Dtos.Category;
 using Movies.WEB.Services.IServices;
 using static Movies.WEB.SD;
 using System;
@@ -14,7 +15,7 @@ namespace Movies.WEB.Services
             _clientFactory = clientFactory;
         }
 
-        public async Task<T> CreateCategoryAsync<T>(CategoryDto categoryDto, string token)
+        public async Task<T> CreateCategoryAsync<T>(CategoryToAddDto categoryDto, string token)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
@@ -55,7 +56,7 @@ namespace Movies.WEB.Services
             });
         }
 
-        public async Task<T> UpdateCategoryAsync<T>(CategoryDto categoryDto, string token)
+        public async Task<T> UpdateCategoryAsync<T>(CategoryToUpdateDto categoryDto, string token)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {

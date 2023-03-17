@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Movies.API.DataAccess;
-using Movies.API.Dtos.Review;
+using Movies.Common.Models.Dtos.Review;
 using Movies.API.Entities;
 using Movies.API.Repositories.Interfaces;
 using System.Security.Claims;

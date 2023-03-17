@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Movies.API.Dtos.User
+namespace Movies.Common.Models.Dtos.User
 {
     public record UserDto
     {

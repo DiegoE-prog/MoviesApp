@@ -5,9 +5,10 @@ using Movies.WEB.Models.Dtos;
 using Movies.WEB.Models.Dtos.Review;
 using Movies.WEB.Services.IServices;
 using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Net.Http.Headers;
+using Movies.Common.Models.Dtos.Movie;
 using System.Security.Claims;
+using Movies.WEB.ViewModels;
+using Movies.Common.Models.Dtos.Review;
 
 namespace Movies.WEB.Controllers
 {
@@ -26,13 +27,13 @@ namespace Movies.WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<MovieDto> movies = new();
+            List<GetMovieDto> movies = new();
 
             var response = await _movieService.GetMoviesAsync<ResponseDto>(token);
 
             if(response is not null && response.Success)
             {
-                movies = JsonConvert.DeserializeObject<List<MovieDto>>(Convert.ToString(response.Data)!)!;
+                movies = JsonConvert.DeserializeObject<List<GetMovieDto>>(Convert.ToString(response.Data)!)!;
             }
 
             return View(movies);
@@ -50,7 +51,7 @@ namespace Movies.WEB.Controllers
 
             if(responseForMovie is not null && responseForMovie.Success)
             {
-                var movie = JsonConvert.DeserializeObject<MovieDto>(Convert.ToString(responseForMovie.Data)!);
+                var movie = JsonConvert.DeserializeObject<GetMovieDto>(Convert.ToString(responseForMovie.Data)!);
 
                 var viewModel = new DetailsViewModel()
                 {
@@ -59,7 +60,7 @@ namespace Movies.WEB.Controllers
 
                 if(responseForReview is not null && responseForReview.Success)
                 {
-                    var reviews = JsonConvert.DeserializeObject<List<ReviewDto>>(Convert.ToString(responseForReview.Data)!);
+                    var reviews = JsonConvert.DeserializeObject<List<GetReviewDto>>(Convert.ToString(responseForReview.Data)!);
 
                     if (reviews!.Any(c => c.User!.Username == User.Identity!.Name))
                     {
