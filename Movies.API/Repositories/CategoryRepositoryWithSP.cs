@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace Movies.API.Repositories
 {
+    [Obsolete("Only for reference, not used any more",true)]
     public class CategoryRepositoryWithSP : ICategoryRepository
     {
         private readonly DataContext _dbContext;
@@ -16,27 +17,27 @@ namespace Movies.API.Repositories
             _dbContext= dbContext;
         }
 
-        public async Task<Category> AddCategoryAsync(CategoryToAddDto categoryToAddDto)
+        public async Task<bool> AddCategoryAsync(CategoryToAddDto categoryToAddDto)
         {
             var result = await _dbContext.Database
-                .ExecuteSqlInterpolatedAsync($"sp_CreateCategory {categoryToAddDto.Name}");
+                .ExecuteSqlInterpolatedAsync($"usp_CreateCategory {categoryToAddDto.Name}");
 
-            return new Category() { CategoryId = result, Name= categoryToAddDto.Name, IsActive = true };
+            return result > 0;
         }
 
-        public async Task<Category> UpdateCategoryAsync(CategoryToUpdateDto categoryToUpdateDto)
+        public async Task<bool> UpdateCategoryAsync(CategoryToUpdateDto categoryToUpdateDto)
         {
             var result = await _dbContext.Database
                     .ExecuteSqlInterpolatedAsync
-                    ($"sp_UpdateCategory {categoryToUpdateDto.CategoryId}, {categoryToUpdateDto.Name}");
+                    ($"usp_UpdateCategory {categoryToUpdateDto.CategoryId}, {categoryToUpdateDto.Name}");
 
-            return new Category() { CategoryId = categoryToUpdateDto.CategoryId, IsActive= true, Name = categoryToUpdateDto.Name};
+            return result > 0;
         }
 
         public async Task<bool> DeleteCategoryAsync(int id)
         {
             var result = await _dbContext.Database
-                    .ExecuteSqlInterpolatedAsync($"sp_DeleteCategory {id}");
+                    .ExecuteSqlInterpolatedAsync($"usp_DeleteCategory {id}");
 
             return result is 1 ? true   : false;
         }
@@ -44,7 +45,7 @@ namespace Movies.API.Repositories
         public async Task<List<Category>> GetCategoriesAsync()
         {
             var categories = await _dbContext.Categories
-                .FromSqlInterpolated($"sp_GetAllCategories").ToListAsync();
+                .FromSqlInterpolated($"usp_GetAllCategories").ToListAsync();
 
             return categories;
         }
@@ -54,7 +55,7 @@ namespace Movies.API.Repositories
             var param = new SqlParameter("@id", id);
 
             var category = await _dbContext.Categories
-                    .FromSqlInterpolated($"sp_GetCategoryById {id}").ToListAsync();
+                    .FromSqlInterpolated($"usp_GetCategoryById {id}").ToListAsync();
 
             return category.First(c => c.CategoryId == id);
         }

@@ -20,16 +20,18 @@ namespace Movies.API.Repositories
             _mapper = mapper;
         }
 
-        public async Task<Category> AddCategoryAsync(CategoryToAddDto categoryToAddDto)
+        public async Task<bool> AddCategoryAsync(CategoryToAddDto categoryToAddDto)
         {
             if(await CategoryExist(categoryToAddDto.Name))
             {
                 throw new Exception("Category already exist");
             }
+
             var category = _mapper.Map<Category>(categoryToAddDto);
             _dbContext.Categories.Add(category);
-            await _dbContext.SaveChangesAsync();
-            return category;
+            var result = await _dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public async Task<bool> DeleteCategoryAsync(int id)
@@ -61,16 +63,19 @@ namespace Movies.API.Repositories
             return category!;
         }
 
-        public async Task<Category> UpdateCategoryAsync(CategoryToUpdateDto categoryToUpdateDto)
+        public async Task<bool> UpdateCategoryAsync(CategoryToUpdateDto categoryToUpdateDto)
         {
+            var isSuccessfull = 0;
             var categoryFromDb = await _dbContext.Categories.FirstOrDefaultAsync(c => c.CategoryId == categoryToUpdateDto.CategoryId);
+            
             if (categoryFromDb is not null)
             {
-                categoryFromDb.Name= categoryToUpdateDto.Name;
-                await _dbContext.SaveChangesAsync();
-                return categoryFromDb;
+                categoryFromDb.Name = categoryToUpdateDto.Name!;
+
+                isSuccessfull = await _dbContext.SaveChangesAsync();
             }
-            return categoryFromDb!;
+
+            return isSuccessfull > 0;
         }
 
         private async Task<bool> CategoryExist(string name)
